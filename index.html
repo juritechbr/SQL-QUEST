@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SQL Quest — Aprenda SQL jogando no Reino de Dataria</title>
+  <meta name="description" content="Jogo educativo gamificado para aprender SQL SELECT, WHERE, GROUP BY, HAVING, ORDER BY, JOINs e Subqueries.">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="css/style.css">
+
+  <!-- SQL.js — executa SQL no navegador, sem servidor -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.10.2/sql-wasm.js"></script>
+</head>
+<body>
+
+  <!-- Tela de carregamento -->
+  <div id="app">
+    <div class="loading-screen">
+      <div class="loading-logo">⚡ SQL Quest</div>
+      <div class="loading-spinner"></div>
+      <div class="loading-texto">Carregando o Reino de Dataria…</div>
+    </div>
+  </div>
+
+  <!-- Scripts do jogo -->
+  <script src="js/database.js"></script>
+  <script src="js/engine.js"></script>
+  <script src="js/ui.js"></script>
+
+  <script>
+    // ─── Inicialização ──────────────────────────────────────
+    (async () => {
+      try {
+        await engine.inicializarDB();
+        ui.mostrarMapa();
+      } catch (err) {
+        document.getElementById('app').innerHTML = `
+          <div class="loading-screen">
+            <div style="font-size:40px">⚠️</div>
+            <div style="font-size:18px;color:#f85149">Erro ao carregar o jogo</div>
+            <div style="font-size:14px;color:#8b949e;max-width:400px;text-align:center">
+              ${err.message}<br><br>
+              Verifique sua conexão com a internet e tente recarregar a página.
+            </div>
+            <button onclick="location.reload()" style="
+              margin-top:16px;padding:10px 24px;background:#c9a227;
+              border:none;border-radius:8px;cursor:pointer;font-size:14px;font-weight:700
+            ">Tentar novamente</button>
+          </div>
+        `;
+      }
+    })();
+  </script>
+</body>
+</html>
